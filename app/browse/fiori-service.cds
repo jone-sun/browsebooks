@@ -5,6 +5,14 @@ annotate CatalogService.Books with @(UI : {
       TypeName : 'Book',
       TypeNamePlural : 'Books',
   },
+  Identification : [
+      {Value : title},
+      {
+          $Type : 'UI.DataFieldForAction',
+          Label : '{i18n>AddReview}',
+          Action : 'CatalogService.addReview'
+      }
+  ],
   LineItem : [
       {Value: title},
       {Value: author},
@@ -37,6 +45,11 @@ annotate CatalogService.Books with @(UI : {
           $Type : 'UI.ReferenceFacet',
           Label : '{i18n>Description}',
           Target : '@UI.FieldGroup#Descr'
+      },
+      {
+          $Type : 'UI.ReferenceFacet',
+          Label : '{i18n>Reviews}',
+          Target : 'reviews/@UI.LineItem'
       }
   ],
 
@@ -74,6 +87,48 @@ annotate CatalogService.Books with @(UI : {
     @Measures.ISOCurrency : currency.code
     price
 };
+
+
+annotate CatalogService.Reviews with @(UI : {
+    PresentationVariant : {
+        $Type : 'UI.PresentationVariantType',
+        SortOrder : [{
+            $Type : 'Common.SortOrderType',
+            Property : modifiedAt,
+            Descending : true
+        }, ],
+    },
+    LineItem : [
+        {
+            $Type : 'UI.DataFieldForAnnotation',
+            Label : '{i18n>Rating}',
+            Target : '@UI.DataPoint#rating'
+        },
+        {
+            $Type : 'UI.DataFieldForAnnotation',
+            Label : '{i18n>User}',
+            Target : '@UI.FieldGroup#ReviewerAndDate'
+        },
+        {
+            Value : title,
+            Label : '{i18n>Title}'
+        },
+        {
+            Value : text,
+            Label : '{i18n>Text}'
+        },
+    ],
+    DataPoint #rating : {
+        Value : rating,
+        Visualization : #Rating,
+        MinimumValue : 0,
+        MaximumValue : 5
+    },
+    FieldGroup #ReviewerAndDate : {Data : [
+        {Value : createdBy},
+        {Value : modifiedAt}
+    ]}
+});
 
 annotate CatalogService.Books actions {
     addReview(rating @title : 'Rating', title  @title : 'Title', text  @title : 'Text')

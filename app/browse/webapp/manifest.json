@@ -65,11 +65,11 @@
         "name": "BooksList",
         "target": "BooksList"
        },
-		{
-			"pattern": "Books({key}):?query:",
-			"name": "BooksDetails",
-			"target": "BooksDetails"
-		}
+        {
+            "pattern": "Books({key}):?query:",
+            "name": "BooksDetails",
+            "target": "BooksDetails"
+        }
       ],
       "targets": {
        "BooksList": {
@@ -102,10 +102,18 @@
 			}
 		}
       }
-     }
+     },
+     "contentDensities": {
+        "compact": true,
+        "cozy": true
+    }
     },
     "sap.ui": {
      "technology": "UI5",
-     "fullWidth": false
+     "fullWidth": true
+    },
+    "sap.fiori": {
+        "registrationIds": [],
+        "archeType": "transactional"
     }
    }

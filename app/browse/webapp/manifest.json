@@ -13,7 +13,24 @@
         "odataVersion": "4.0"
        }
       }
-     }
+     },
+     "-sourceTemplate": {
+      "id": "ui5template.basicSAPUI5ApplicationProject",
+      "-id": "ui5template.smartTemplate",
+      "-version": "1.40.12"
+  },
+  "crossNavigation": {
+      "inbounds": {
+          "Books-show": {
+              "signature": {
+                  "parameters": {},
+                  "additionalParameters": "allowed"
+              },
+              "semanticObject": "Books",
+              "action": "show"
+          }
+      }
+  }
     },
     "sap.ui5": {
      "dependencies": {
@@ -22,6 +39,10 @@
       }
      },
      "models": {
+		"i18n": {
+			"type": "sap.ui.model.resource.ResourceModel",
+			"uri": "i18n/i18n.properties"
+            },
       "": {
        "dataSource": "CatalogService",
        "settings": {
@@ -43,7 +64,12 @@
         "pattern": ":?query:",
         "name": "BooksList",
         "target": "BooksList"
-       }
+       },
+		{
+			"pattern": "Books({key}):?query:",
+			"name": "BooksDetails",
+			"target": "BooksDetails"
+		}
       ],
       "targets": {
        "BooksList": {
@@ -52,10 +78,29 @@
         "name": "sap.fe.templates.ListReport",
         "options": {
          "settings": {
-          "entitySet": "Books"
+          "entitySet": "Books",
+			"navigation" : {
+				"Books" : {
+					"detail" : {
+						"route" : "BooksDetails"
+					}
+				}
+			}		  
          }
         }
-       }
+       },
+		 "BooksDetails": {
+			"type": "Component",
+			"id": "BooksDetailsList",
+			"name": "sap.fe.templates.ObjectPage",
+			"options": {
+				"settings" : {
+					"entitySet" : "Books",
+					"navigation" : {
+					}
+				}
+			}
+		}
       }
      }
     },

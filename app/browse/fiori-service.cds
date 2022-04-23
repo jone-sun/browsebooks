@@ -27,10 +27,31 @@ annotate CatalogService.Books with @(UI : {
         Target : '@UI.FieldGroup#AddReview'
       }      
   ],
+  Facets : [
+      {
+          $Type : 'UI.ReferenceFacet',
+          Label : '{i18n>General}',
+          Target : '@UI.FieldGroup#General'
+      },
+      {
+          $Type : 'UI.ReferenceFacet',
+          Label : '{i18n>Description}',
+          Target : '@UI.FieldGroup#Descr'
+      }
+  ],
+
+  FieldGroup #General : {Data : [
+      {Value : title},
+      {Value : author},
+      {Value : genre}
+  ]},
+  FieldGroup #Descr : {Data : [{Value : descr}]},
+
   SelectionFields : [
     author,
     genre
   ],
+
   PresentationVariant : {
     Text           : 'Default',
     SortOrder      : [{Property : title}],

@@ -130,6 +130,21 @@ annotate CatalogService.Reviews with @(UI : {
     ]}
 });
 
+// annotate CatalogService.Books actions {
+//     addReview(rating @title : 'Rating', title  @title : 'Title', text  @title : 'Text')
+// }
+
 annotate CatalogService.Books actions {
-    addReview(rating @title : 'Rating', title  @title : 'Title', text  @title : 'Text')
+    @(
+        Common.SideEffects : {
+            TargetProperties : ['_it/rating'],
+            TargetEntities : [
+                _it,
+                _it.reviews
+            ]
+        },
+        cds.odata.bindingparameter.name : '_it',
+        Core.OperationAvailable : 'true'
+    )
+    addReview(rating @title : '{i18n>Rating}', title  @title : '{i18n>Title}', text  @title : '{i18n>Text}')
 }
